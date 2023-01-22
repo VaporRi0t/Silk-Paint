@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - TouchDrawer: A vector drawing tool for mobile</title>
+  <link rel="stylesheet" href="https://michaelsboost.com/TouchDrawer/libraries/alertifyjs/alertify.core.css" />
+<link rel="stylesheet" href="https://michaelsboost.com/TouchDrawer/libraries/alertifyjs/alertify.default.css" />
+<link rel="stylesheet" href="https://michaelsboost.com/TouchDrawer/libraries/sweetalert2/sweetalert2.min.css" />
+<link rel="stylesheet" href="https://michaelsboost.com/TouchDrawer/libraries/pickr/themes/classic.min.css" />
+<link rel="stylesheet" href="https://michaelsboost.com/TouchDrawer/libraries/pickr/themes/monolith.min.css" />
+<link rel="stylesheet" href="https://michaelsboost.com/TouchDrawer/libraries/pickr/themes/nano.min.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!--
+  Version: 1.000-dev
+  TouchDrawer, copyright (c) by Michael Schwartz
+  Distributed under an MIT license: https://github.com/michaelsboost/TouchDrawer/blob/gh-pages/LICENSE
+  
+  This is TouchDrawer (https://michaelsboost.github.io/TouchDrawer/), Just a free and open source vector drawing tool for mobile.
+-->
+
+<!-- left side -->
+<div data-lefticons>
+  <a data-tools="zoom" title="Pan/Zoom Tool">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/zoom.svg">
+  </a>
+  <a data-tools="colorpicker" title="Color Picker">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/color.svg">
+  </a>
+  <a data-tools="eyedropper" title="Eyedropper">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/eyedropper.svg">
+  </a>
+  <a data-tools="select" title="Select">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/select.svg">
+  </a>
+  <a data-tools="pencil" title="Pencil">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/pencil.svg">
+  </a>
+  <a data-tools="brush" title="Brush">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/brush.svg">
+  </a>
+  <a data-tools="eraser" title="Eraser">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/eraser.svg">
+  </a>
+  <a data-tools="lasso" title="Lasso">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/lasso.svg">
+  </a>
+  <a data-tools="lassoerase" title="Lasso Eraser">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/eraser3.svg">
+  </a>
+  <a data-tools="rect" title="Rect">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/rect.svg">
+  </a>
+  <a data-tools="ellipse" title="Ellipse">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/ellipse.svg">
+  </a>
+  <a data-tools="line" title="Line">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/line2.svg">
+  </a>
+  <a data-tools="triangle" title="Triangle">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/triangle.svg">
+  </a>
+  <a data-tools="splatter" title="Splatter">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/splatter.svg">
+  </a>
+  <a data-tools="spray" title="Spray">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/spray.svg">
+  </a>
+  <a data-tools="fill" title="Fill">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/fill.svg">
+  </a>
+  <a data-tools="filters" title="Filters">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/filters.svg">
+  </a>
+</div>
+
+<!-- right side -->
+<div data-righticons>
+  <a data-play="play" title="Play">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/play.svg">
+  </a>
+  <a data-export="pngframe" title="Export Frame As PNG" onclick="downloadPNGWithFilters()">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/saveimage2.svg">
+  </a>
+  <a data-export="svgframe" title="Export Frame As SVG" onclick="downloadSVGWithFilters()">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/savecode2.svg">
+  </a>
+  <a data-clearcanvas title="Clear canvas" onclick="clearcanvas()">
+    <img src="https://michaelsboost.com/TouchDrawer/svgs/broom.svg">
+  </a>
+</div>
+
+<!-- main menu -->
+<div data-topmenu>
+  <div data-mainmenu>
+    <span>
+      <a data-info title="App Information">
+        <img src="https://michaelsboost.com/TouchDrawer/logo.svg">
+      </a>
+      <a href="https://michaelsboost.com/donate/" target="_blank" title="Donate">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/donate.svg">
+      </a>
+      <button data-call="new">NEW</button>
+      <label for="openfile">
+        LOAD
+      </label>
+    </span>
+
+    <span>
+      <h1 data-projectname>My Project</h1>
+    </span>
+
+    <span data-menubuttons>
+      <button onclick="exportJSON()">SAVE</button>
+      <button data-export onclick="exportZIP()">ZIP</button>
+      <button data-export onclick="exportGIF()">GIF</button>
+
+      <a data-call="settings" title="Settings">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/cog.svg">
+      </a>
+    </span>
+  </div>
+  <div data-toolsmenu style="display: none;">
+    <span>
+      <a data-info title="App Information">
+        <img src="https://michaelsboost.com/TouchDrawer/logo.svg">
+      </a>
+      <a href="https://michaelsboost.com/donate/" target="_blank" title="Donate">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/donate.svg">
+      </a>
+    </span>
+
+    <div data-toolsoption="zoom">
+      <span>
+        <button data-call="new">NEW</button>
+        <label for="openfile">
+          LOAD
+        </label>
+      </span>
+
+      <span>
+        <h1 data-projectname>My Project</h1>
+      </span>
+
+      <span data-menubuttons>
+        <button onclick="exportJSON()">SAVE</button>
+        <button data-export onclick="exportZIP()">ZIP</button>
+        <button data-export onclick="exportGIF()">GIF</button>
+
+        <a data-resetzoompos title="Reset Default Size">
+          <img src="https://michaelsboost.com/TouchDrawer/svgs/resetsize.svg">
+        </a>
+        <a data-call="settings" title="Settings">
+          <img src="https://michaelsboost.com/TouchDrawer/svgs/cog.svg">
+        </a>
+      </span>
+    </div>
+    <div data-toolsoption="colorpicker">
+      <a data-triggertool="fill">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/fill.svg">
+      </a>
+      <button class="active">Fill</button>
+      <button>Stroke</button>
+      <button data-flipcolors>Flip</button>
+    </div>
+    <div data-toolsoption="eyedropper"></div>
+    <div data-toolsoption="select">
+      <a data-forselect onclick="group()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/group.svg">
+      </a>
+      <a data-forselect onclick="duplicate()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/duplicate.svg">
+      </a>
+      <a data-forselect onclick="remove()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/trash.svg">
+      </a>
+      <a data-selectortool="ungroup" onclick="ungroup()" style="display: none;">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/ungroup.svg">
+      </a>
+      <a data-forselect onclick="alignLeft()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/alignleft.svg">
+      </a>
+      <a data-forselect onclick="alignCenter()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/aligncenter.svg">
+      </a>
+      <a data-forselect onclick="alignRight()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/alignright.svg">
+      </a>
+      <a data-forselect onclick="alignTop()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/aligntop.svg">
+      </a>
+      <a data-forselect onclick="alignMiddle()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/alignmiddle.svg">
+      </a>
+      <a data-forselect onclick="alignBottom()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/alignbottom.svg">
+      </a>
+      <a data-forselect onclick="flipH()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/fliph.svg">
+      </a>
+      <a  data-forselect onclick="flipV()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/flipv.svg">
+      </a>
+      <a data-forselect onclick="rotateCCW()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/rotateccw.svg">
+      </a>
+      <a data-forselect onclick="rotateCW()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/rotatecw.svg">
+      </a>
+      <a data-forselect onclick="sendBackwards()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/sendbackward.svg">
+      </a>
+      <a data-forselect onclick="sendForward()">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/sendforward.svg">
+      </a>
+    </div>
+    <div data-toolsoption="pencil"></div>
+    <div data-toolsoption="brush"></div>
+    <div data-toolsoption="lasso"></div>
+    <div data-toolsoption="rect"></div>
+    <div data-toolsoption="ellipse"></div>
+    <div data-toolsoption="line"></div>
+    <div data-toolsoption="triangle"></div>
+    <div data-toolsoption="splatter"></div>
+    <div data-toolsoption="spray"></div>
+    <div data-toolsoption="eraser"></div>
+    <div data-toolsoption="fill">
+      <a data-triggertool="colorpicker">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/color.svg">
+      </a>
+    </div>
+    <div data-toolsoption="filters">
+      <a data-clear="filters" title="Clear Filters">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/trash.svg">
+      </a>
+      <a data-filter="blur" title="Blur">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/blur.svg">
+      </a>
+      <a data-filter="hue" title="Hue">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/hue.svg" style="filter: brightness(1);">
+      </a>
+      <a data-filter="brightness" title="Brightness">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/brightness.svg">
+      </a>
+      <a data-filter="contrast" title="Contrast">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/contrast.svg">
+      </a>
+      <a data-filter="saturation" title="Saturation">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/saturation.svg">
+      </a>
+      <a data-filter="grayscale" title="Grayscale">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/panda.svg" style="filter: brightness(1.25) grayscale(1);">
+      </a>
+      <a data-filter="sepia" title="Sepia">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/panda.svg" style="filter: brightness(1) sepia(1);">
+      </a>
+      <a data-filter="invert" title="Invert">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/invert.svg">
+      </a>
+    </div>
+    <div data-toolsoption="brushsize">
+      strokeLineCap: 
+      <select id="brushStrokeCap">
+        <option value="butt">butt</option>
+        <option value="round" selected>round</option>
+        <option value="square">square</option>
+      </select>
+      strokeLineJoin: 
+      <select id="brushStrokeLineJoin">
+        <option value="bevel">bevel</option>
+        <option value="round" selected>round</option>
+        <option value="miter">miter</option>
+      </select>
+      Miter: <input id="brushMiter" type="number" class="numinhead" min="1" value="1" step="1">
+      Brush size: <input id="brushSize" type="number" class="numinhead" min="0" value="20" step="1">
+    </div>
+    <div data-toolsoption="blur">
+      Blur:
+
+      <input id="blurfilter" class="filterval numinhead" type="number" min="0" step="0.1" value="0">
+
+      <a data-close="filter">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/times.svg">
+      </a>
+    </div>
+    <div data-toolsoption="hue">
+      Hue:
+
+      <input id="huefilter" class="filterval" type="range" min="0" step="1" value="0" max="360">
+
+      <a data-close="filter">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/times.svg">
+      </a>
+    </div>
+    <div data-toolsoption="brightness">
+      Brightness:
+
+      <input id="brightnessfilter" class="filterval numinhead" type="number" min="0" step="0.01" value="1">
+
+      <a data-close="filter">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/times.svg">
+      </a>
+    </div>
+    <div data-toolsoption="contrast">
+      Contrast:
+
+      <input id="contrastfilter" class="filterval numinhead" type="number" min="0" step="0.01" value="1">
+
+      <a data-close="filter">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/times.svg">
+      </a>
+    </div>
+    <div data-toolsoption="saturation">
+      Saturation:
+
+      <input id="saturatefilter" class="filterval numinhead" type="number" min="0" step="0.01" value="1">
+
+      <a data-close="filter">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/times.svg">
+      </a>
+    </div>
+    <div data-toolsoption="grayscale">
+      Grayscale:
+
+      <input id="grayscalefilter" class="filterval" type="range" min="0" step="0" value="0" max="100">
+
+      <a data-close="filter">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/times.svg">
+      </a>
+    </div>
+    <div data-toolsoption="sepia">
+      Sepia:
+
+      <input id="sepiafilter" class="filterval" type="range" min="0" step="1" value="0" max="100">
+
+      <a data-close="filter">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/times.svg">
+      </a>
+    </div>
+    <div data-toolsoption="invert">
+      Invert:
+
+      <input id="invertfilter" class="filterval" type="range" min="0" step="1" value="0" max="100">
+
+      <a data-close="filter">
+        <img src="https://michaelsboost.com/TouchDrawer/svgs/times.svg">
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- canvas -->
+<div class="dialog" data-canvasbg>
+  <div data-canvas>
+    <canvas id="canvas" width="1280" height="800"></canvas>
+  </div>
+</div>
+
+<!-- dialogs -->
+<div data-dialogs>
+  <div class="dialog" data-dialog="new">
+    <div style="display: flex; justify-content: space-between; flex-direction: row; flex-wrap: nowrap;">
+      <h2>Width:</h2>
+      <h2>Height:</h2>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+      <input data-new="width" type="number" min="1" value="1280" placeholder="width">
+      <input data-new="height" type="number" min="1" value="800" placeholder="height">
+    </div>
+
+    <h2>Presets:</h2>
+    <div class="hscroll">
+      <button data-size="851x315">Facebook Cover</button>
+      <button data-size="1500x500">Twitter Cover</button>
+      <button data-size="2560x1440">YouTube Cover</button>
+      <button data-size="1440x425">LinkedIn Cover</button>
+      <button data-size="900x480">Twitch Cover</button>
+      <button data-size="1024x512">Twitter Post</button>
+      <button data-size="940x788">Facebook Post</button>
+      <button data-size="810x450">Facebook App</button>
+      <button data-size="1200x627">Facebook Ad</button>
+      <button data-size="1080x1080">Instagram Post</button>
+      <button data-size="1080x1920">Instagram Stories</button>
+      <button data-size="540x810">Tumblr Graphic</button>
+      <button data-size="735x600">Pinterest Pin</button>
+      <button data-size="1206x708">Twitch Video</button>
+      <button data-size="646x220">LinkedIn Banner</button>
+      <button data-size="800x600">Dribbble Shot</button>
+    </div>
+
+    <h2>Frame Rate: (ms)</h2>
+    <input data-new="framerate" type="number" min="1" value="40">
+
+    <button data-confirm="newproject">Confirm</button>
+  </div>
+  <div class="dialog" data-dialog="settings">
+    <h2>Frame Rate: (ms)</h2>
+    <input data-framerate type="number" min="1" value="40">
+
+    <h2>Notepad:</h2>
+    <textarea data-notepad placeholder="your notes go here...."></textarea>
+  </div>
+  <div class="dialog colorpicker" data-dialog="colorpicker">
+    <div class="fill-pickr pickr"></div>
+    <div class="stroke-pickr pickr"></div>
+  </div>
+  <div class="dialog" data-dialog="play"></div>
+</div>
+
+<!-- bottom menu -->
+<div data-bottommenu>
+  <span>
+    <a data-undo title="Undo" onclick="undo()">
+      <img src="https://michaelsboost.com/TouchDrawer/svgs/undo.svg">
+    </a>
+    <a data-add title="Add Frame">
+      <img src="https://michaelsboost.com/TouchDrawer/svgs/add2.svg">
+    </a>
+  </span>
+
+  <span data-frames>
+    <ul></ul>
+  </span>
+
+  <span>
+    <a data-delete title="Delete Frame">
+      <img src="https://michaelsboost.com/TouchDrawer/svgs/trash.svg">
+    </a>
+    <a data-redo title="Redo" onclick="redo()">
+      <img src="https://michaelsboost.com/TouchDrawer/svgs/redo.svg">
+    </a>
+  </span>
+</div>
+
+<div style="display: none;">
+  <input type="file" accept="image/svg+xml, application/json" id="openfile" onchange="loadfile(this)">
+</div>
+
+<script src="https://michaelsboost.com/TouchDrawer/libraries/alertifyjs/alertify.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/bowser/bowser.min.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/fabricjs/fabric.min.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/fabricjs/eraser_brush.mixin.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/fabricjs/lassoerase.mixin.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/SVGAnimFrames/SVGAnimFrames.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/gifshot/gifshot.min.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/jquery/jquery.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/jquery/jquery-migrate-1.2.1.min.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/jszip/Blob.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/jszip/FileSaver.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/jszip/jszip.min.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/jszip/jszip-utils.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/panzoom/panzoom.mod.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/pickr/pickr.min.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/saveSvgAsPng/saveSvgAsPng.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/libraries/sweetalert2/sweetalert2.min.js"></script>
+<script src="https://michaelsboost.com/TouchDrawer/js/browsersupport.js"></script>
+<!-- partial -->
+  <script src='https://sortablejs.github.io/Sortable/Sortable.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-sortablejs/1.6.1/jquery-sortable.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
