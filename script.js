@@ -1,11 +1,3 @@
-/*
-  Version: 1.000-dev
-  TouchDrawer, copyright (c) by Michael Schwartz
-  Distributed under an MIT license: https://github.com/michaelsboost/TouchDrawer/blob/gh-pages/LICENSE
-  
-  This is TouchDrawer (https://michaelsboost.github.io/TouchDrawer/), Just a free and open source vector drawing tool for mobile.
-*/
-
 // variables
 var version = '1.000',
     fillPickr, strokePickr,
@@ -29,7 +21,7 @@ $('[data-info]').click(function() {
 //  alertify.log('<div style="font-size: 14px; text-align: center;"><img src="logo.svg" style="width: 50%;"><br><h1>TouchDrawer</h1><h5>Version 1.000-dev</h5></div>');
   
   swal({
-    html: '<img src="logo.svg" style="isolation:isolate; width: 50%; cursor: pointer;" viewBox="0 0 512 512" onclick="window.open(\'https://github.com/michaelsboost/TouchDrawer\', \'_blank\')"><br><h1>TouchDrawer</h1><h5>Version 1.000-dev</h5><a href="https://github.com/michaelsboost/TouchDrawer/blob/gh-pages/LICENSE" target="_blank">Open Source License</a>'
+    html: '<img src="https://michaelsboost.com/TouchDrawer/svgs/donate.svg" style="isolation:isolate; width: 50%; cursor: pointer;" viewBox="0 0 512 512" onclick="window.open(\'https://ri0t-projects.vaporri0t.repl.co/\', \'_blank\')"><br><h1>Silk Paint</h1><h5>Version 1.000-dev</h5><a href="https://ri0t-projects.vaporri0t.repl.co/" target="_blank">Support Me</a>'
   });
 //  $('.swal2-show').css('background', '#000');
   $('.swal2-show').css('font-size', '14px');
